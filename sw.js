@@ -1,9 +1,7 @@
 // VIA ELITE Store Display — Service Worker
-// 오프라인 캐시 + 빠른 재로딩
-const CACHE_NAME = 'viaelite-display-v1';
+// HTML/JS는 네트워크 우선, 아이콘만 캐시 우선
+const CACHE_NAME = 'viaelite-display-v3';
 const ASSETS = [
-  '/',
-  '/index.html',
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
@@ -22,22 +20,40 @@ self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
-  // Apps Script 호출은 항상 네트워크로
-  if (e.request.url.includes('script.google.com')) {
-    e.respondWith(fetch(e.request).catch(() => new Response('{"success":false,"message":"offline"}', { headers: { 'Content-Type': 'application/json' } })));
+  const url = e.request.url;
+
+  // Apps Script — 항상 네트워크
+  if (url.includes('script.google.com')) {
+    e.respondWith(
+      fetch(e.request).catch(() =>
+        new Response('{"success":false,"message":"offline"}', { headers: { 'Content-Type': 'application/json' } })
+      )
+    );
     return;
   }
-  // 나머지는 캐시 우선
+
+  // HTML / 루트 — 네트워크 우선 (업데이트 즉시 반영)
+  if (e.request.mode === 'navigate' || url.endsWith('/') || url.endsWith('/index.html')) {
+    e.respondWith(
+      fetch(e.request).then(res => {
+        const clone = res.clone();
+        caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // 아이콘 등 정적 자원 — 캐시 우선
   e.respondWith(
     caches.match(e.request).then(cached =>
       cached || fetch(e.request).then(res => {
-        if (res.ok && e.request.url.startsWith(self.location.origin)) {
+        if (res.ok && url.startsWith(self.location.origin)) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
         }
