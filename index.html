@@ -161,9 +161,9 @@
     flex: 1;
     background: #faf9f5;
     display: flex; flex-direction: column;
-    padding: 60px 64px 180px;
+    padding: 44px 64px 180px;
     position: relative;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .slide .info-side .top-tag {
@@ -172,7 +172,7 @@
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
     padding: 8px 18px; border-radius: 999px;
-    margin-bottom: 36px;
+    margin-bottom: 22px;
     box-shadow: 0 6px 16px rgba(28,56,41,0.22);
   }
   .slide .info-side .top-tag::before {
@@ -186,14 +186,19 @@
   }
   .slide .info-side .brand-kr {
     font-size: 17px; color: #8a8174; font-weight: 500;
-    letter-spacing: 0.18em; margin-bottom: 26px;
+    letter-spacing: 0.18em; margin-bottom: 22px;
   }
   .slide .info-side .divider {
-    height: 1px; background: #1c3829; opacity: 0.25; margin-bottom: 22px;
+    height: 1px; background: #1c3829; opacity: 0.45;
+    margin: 0 0 22px;
   }
   .slide .info-side .product-name {
-    font-size: 20px; color: #3a3a3a; font-weight: 400;
-    letter-spacing: 0.02em; margin-bottom: 26px; line-height: 1.5;
+    font-size: 19px; color: #3a3a3a; font-weight: 400;
+    letter-spacing: 0.02em; margin-bottom: 22px; line-height: 1.5;
+  }
+  .slide .info-side .divider-sub {
+    height: 1px; background: #1c3829; opacity: 0.18;
+    margin: 0 0 22px;
   }
 
   /* 할인 태그 — 빨간 스티커, 우측 정렬 */
@@ -629,6 +634,7 @@ function renderSlides() {
         ${s.brandKr ? `<div class="brand-kr">${s.brandKr}</div>` : ''}
         <div class="divider"></div>
         ${s.productName ? `<div class="product-name">${s.productName}</div>` : ''}
+        <div class="divider-sub"></div>
         ${s.discount > 0 ? `
           <div class="disc-row">
             <div class="discount-tag">
