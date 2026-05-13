@@ -37,25 +37,34 @@
 
   .slide {
     position: absolute; inset: 0;
+    display: flex;
     opacity: 0; pointer-events: none;
     visibility: hidden;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
   }
   .slide.active { opacity: 1; pointer-events: auto; visibility: visible; }
 
-  .slide .bg-image {
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, #f4f3ed 0%, #ecebe6 100%);
-    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  .slide .image-side {
+    flex: 1.15;
+    position: relative;
+    background: linear-gradient(135deg, #f5f4ee 0%, #eae8e0 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 120px 80px 120px;
+    overflow: hidden;
   }
-  .slide .bg-image img {
-    width: 100%; height: 100%;
+  .slide .image-side::after {
+    content: '';
+    position: absolute; right: 0; top: 15%; bottom: 15%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(28,56,41,0.18), transparent);
+  }
+  .slide .image-side img {
+    max-width: 100%; max-height: 100%;
     object-fit: contain;
-    object-position: center 35%;
-    padding: 80px 80px 280px;
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,0.14));
   }
-  .slide .bg-image .placeholder {
-    color: #c0bdb3; font-size: 18px; letter-spacing: 0.1em; text-align: center;
+  .slide .image-side .placeholder {
+    color: #c0bdb3; font-size: 16px; letter-spacing: 0.1em; text-align: center;
   }
 
   .top-overlay {
@@ -116,83 +125,88 @@
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   .slide .discount-badge {
-    position: absolute; top: 90px; left: 40px;
+    position: absolute; top: 100px; left: 60px;
     background: #1c3829; color: #fff;
-    padding: 26px 44px 26px 36px;
-    border-bottom-right-radius: 999px;
-    border-top-right-radius: 999px;
-    display: flex; align-items: baseline; gap: 6px;
-    font-weight: 900; font-family: 'Inter', sans-serif;
-    box-shadow: 0 12px 30px rgba(28, 56, 41, 0.35);
+    padding: 14px 26px;
+    border-radius: 999px;
+    display: flex; align-items: baseline; gap: 4px;
+    font-weight: 800; font-family: 'Inter', sans-serif;
+    box-shadow: 0 10px 28px rgba(28, 56, 41, 0.25);
     z-index: 5;
   }
-  .slide .discount-badge .num { font-size: 84px; line-height: 1; letter-spacing: -0.04em; }
-  .slide .discount-badge .pct { font-size: 36px; line-height: 1; }
+  .slide .discount-badge .num { font-size: 28px; line-height: 1; letter-spacing: -0.02em; }
+  .slide .discount-badge .pct { font-size: 16px; line-height: 1; }
 
-  .slide .info-panel {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 80px 60px 60px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(250,249,245,0.95) 35%, rgba(250,249,245,1) 100%);
-    display: flex; align-items: flex-end; justify-content: space-between;
-    gap: 60px; z-index: 5;
+  .slide .info-side {
+    flex: 1;
+    background: #faf9f5;
+    padding: 120px 70px 60px;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
   }
-  .slide .info-panel .info-left { flex: 1; }
-  .slide .info-panel .title-eyebrow {
+  .slide .info-side .spacer-top { flex: 1; min-height: 20px; }
+  .slide .info-side .spacer-bot { flex: 1; min-height: 40px; }
+  .slide .info-side .title-eyebrow {
     font-family: 'Inter', sans-serif;
-    font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase;
-    color: #c0392b; font-weight: 800; margin-bottom: 16px;
+    font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: #c0392b; font-weight: 700; margin-bottom: 28px;
   }
-  .slide .info-panel .brand-line {
-    display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px;
-  }
-  .slide .info-panel .brand-en {
+  .slide .info-side .brand-line { margin-bottom: 8px; }
+  .slide .info-side .brand-en {
+    display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 68px; font-weight: 700; color: #1c1c1c;
-    letter-spacing: 0.02em; line-height: 1;
+    font-size: 64px; font-weight: 500; color: #1c1c1c;
+    letter-spacing: 0.01em; line-height: 1.05;
   }
-  .slide .info-panel .brand-kr {
-    font-size: 18px; color: #8a8174; font-weight: 500; letter-spacing: 0.1em;
+  .slide .info-side .brand-kr {
+    display: block;
+    font-size: 14px; color: #8a8174; font-weight: 500;
+    letter-spacing: 0.2em; margin-top: 10px; text-transform: uppercase;
   }
-  .slide .info-panel .product-name {
-    font-size: 19px; color: #555; font-weight: 500;
-    letter-spacing: 0.02em; margin-bottom: 24px;
+  .slide .info-side .divider {
+    width: 56px; height: 1px; background: #1c3829;
+    margin: 32px 0 28px; opacity: 0.35;
   }
-  .slide .info-panel .prices {
-    display: flex; align-items: baseline; gap: 24px;
+  .slide .info-side .product-name {
+    font-size: 20px; color: #3a3a3a; font-weight: 400;
+    letter-spacing: 0.02em; margin-bottom: 56px; line-height: 1.5;
   }
-  .slide .info-panel .price-original {
-    font-size: 20px; color: #999; text-decoration: line-through;
-    text-decoration-color: #c0392b; font-weight: 500;
+  .slide .info-side .price-original {
+    font-size: 17px; color: #a09c93; text-decoration: line-through;
+    text-decoration-color: rgba(192,57,43,0.55); font-weight: 400;
+    letter-spacing: 0.02em; margin-bottom: 12px;
   }
-  .slide .info-panel .price-block { display: flex; flex-direction: column; }
-  .slide .info-panel .price-label {
-    font-size: 12px; color: #1c3829; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;
+  .slide .info-side .price-label {
+    font-size: 11px; color: #1c3829; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;
   }
-  .slide .info-panel .price-sale {
+  .slide .info-side .price-sale {
     font-family: 'Inter', sans-serif;
-    font-size: 64px; font-weight: 900;
+    font-size: 54px; font-weight: 800;
     color: #1c1c1c; letter-spacing: -0.025em; line-height: 1;
+    margin-bottom: 44px;
   }
-  .slide .info-panel .price-sale .won {
-    font-size: 32px; margin-left: 6px; font-weight: 700;
+  .slide .info-side .price-sale .won {
+    font-size: 24px; margin-left: 6px; font-weight: 600;
   }
 
   .buy-btn {
     background: #1c3829; color: #fff;
-    border: 0; padding: 26px 56px;
+    border: 0; padding: 22px 48px;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 20px; font-weight: 700;
+    font-size: 17px; font-weight: 700;
     letter-spacing: 0.18em;
     border-radius: 999px;
     cursor: pointer;
-    box-shadow: 0 16px 36px rgba(28, 56, 41, 0.4);
+    box-shadow: 0 14px 32px rgba(28, 56, 41, 0.32);
     transition: transform 0.15s, box-shadow 0.15s;
-    display: inline-flex; align-items: center; gap: 14px;
+    display: inline-flex; align-items: center; gap: 12px;
     white-space: nowrap;
+    align-self: flex-start;
   }
+  .buy-btn:hover { box-shadow: 0 18px 40px rgba(28, 56, 41, 0.4); }
   .buy-btn:active { transform: scale(0.96); }
-  .buy-btn .arrow { font-size: 24px; }
+  .buy-btn .arrow { font-size: 22px; }
 
   .bottom-indicators {
     position: absolute; bottom: 20px; left: 50%;
@@ -522,27 +536,24 @@ function renderSlides() {
 
   container.innerHTML = filteredSlides.map((s, i) => `
     <div class="slide ${i === 0 ? 'active' : ''}" data-idx="${i}">
-      <div class="bg-image">
+      <div class="image-side">
         ${s.image ? `<img src="${normalizeImg(s.image)}" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=fallbackImg(this.src);">` : `<div class="placeholder">상품 이미지 (어드민에서 등록)</div>`}
+        ${s.discount > 0 ? `<div class="discount-badge"><span class="num">${s.discount}</span><span class="pct">%</span></div>` : ''}
       </div>
-      ${s.discount > 0 ? `<div class="discount-badge"><span class="num">${s.discount}</span><span class="pct">%</span></div>` : ''}
-      <div class="info-panel">
-        <div class="info-left">
-          ${s.titleEyebrow ? `<div class="title-eyebrow">${s.titleEyebrow}</div>` : ''}
-          <div class="brand-line">
-            <span class="brand-en">${s.brandEn || ''}</span>
-            <span class="brand-kr">${s.brandKr || ''}</span>
-          </div>
-          <div class="product-name">${s.productName || ''}</div>
-          <div class="prices">
-            ${s.original ? `<span class="price-original">${fmtWon(s.original)}</span>` : ''}
-            <div class="price-block">
-              <span class="price-label">비아엘리떼 컨시어지 가</span>
-              <span class="price-sale">${Number(s.sale).toLocaleString('ko-KR')}<span class="won">원</span></span>
-            </div>
-          </div>
+      <div class="info-side">
+        <div class="spacer-top"></div>
+        ${s.titleEyebrow ? `<div class="title-eyebrow">${s.titleEyebrow}</div>` : ''}
+        <div class="brand-line">
+          <span class="brand-en">${s.brandEn || ''}</span>
+          ${s.brandKr ? `<span class="brand-kr">${s.brandKr}</span>` : ''}
         </div>
-        <button class="buy-btn" onclick="openBuyModal(${s.id})">구매하기 <span class="arrow">→</span></button>
+        <div class="divider"></div>
+        <div class="product-name">${s.productName || ''}</div>
+        ${s.original ? `<div class="price-original">${fmtWon(s.original)}</div>` : ''}
+        <div class="price-label">비아엘리떼 컨시어지 가</div>
+        <div class="price-sale">${Number(s.sale).toLocaleString('ko-KR')}<span class="won">원</span></div>
+        <button class="buy-btn" data-buy-id="${s.id}" type="button">구매하기 <span class="arrow">→</span></button>
+        <div class="spacer-bot"></div>
       </div>
     </div>
   `).join('');
@@ -646,6 +657,14 @@ function openBuyModal(slideId) {
   document.getElementById('formArea').style.display = 'block';
   document.getElementById('successMsg').classList.remove('open');
 }
+
+// 이벤트 위임: 슬라이드 컨테이너 안의 '구매하기' 버튼 모두 잡음
+document.getElementById('slidesContainer').addEventListener('click', e => {
+  const btn = e.target.closest('.buy-btn');
+  if (!btn) return;
+  e.preventDefault(); e.stopPropagation();
+  openBuyModal(btn.dataset.buyId);
+}, true);
 function closeBuyModal() {
   document.getElementById('modalBg').classList.remove('open');
   document.getElementById('name').value = '';
