@@ -38,9 +38,10 @@
   .slide {
     position: absolute; inset: 0;
     opacity: 0; pointer-events: none;
-    transition: opacity 1s ease;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
   }
-  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active { opacity: 1; pointer-events: auto; visibility: visible; }
 
   .slide .bg-image {
     position: absolute; inset: 0;
@@ -63,7 +64,9 @@
     gap: 24px;
     z-index: 10;
     background: linear-gradient(to bottom, rgba(255,255,255,0.96), rgba(255,255,255,0));
+    pointer-events: none;
   }
+  .top-overlay > * { pointer-events: auto; }
   .top-overlay .logo img {
     height: 28px; display: block;
     filter: brightness(0) saturate(100%) invert(15%) sepia(34%) saturate(1264%) hue-rotate(108deg) brightness(95%) contrast(89%);
@@ -485,6 +488,23 @@ async function loadSlides() {
 
 function fmtWon(n) { return Number(n).toLocaleString('ko-KR') + '원'; }
 
+// Drive thumbnail URL이 모바일에서 가끔 차단됨 → 대체 URL 자동 폴백
+function normalizeImg(url) {
+  if (!url) return url;
+  const m = url.match(/[?&]id=([^&]+)/);
+  if (m) return 'https://lh3.googleusercontent.com/d/' + m[1] + '=w2000';
+  return url;
+}
+function fallbackImg(currentSrc) {
+  const m = currentSrc.match(/\/d\/([^=]+)/) || currentSrc.match(/[?&]id=([^&]+)/);
+  if (!m) return currentSrc;
+  const id = m[1];
+  if (currentSrc.includes('lh3.googleusercontent')) {
+    return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w2000';
+  }
+  return 'https://drive.google.com/uc?export=view&id=' + id;
+}
+
 function renderSlides() {
   const container = document.getElementById('slidesContainer');
   const dotsEl = document.getElementById('dots');
@@ -502,7 +522,7 @@ function renderSlides() {
   container.innerHTML = filteredSlides.map((s, i) => `
     <div class="slide ${i === 0 ? 'active' : ''}" data-idx="${i}">
       <div class="bg-image">
-        ${s.image ? `<img src="${s.image}" alt="">` : `<div class="placeholder">상품 이미지 (어드민에서 등록)</div>`}
+        ${s.image ? `<img src="${normalizeImg(s.image)}" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=fallbackImg(this.src);">` : `<div class="placeholder">상품 이미지 (어드민에서 등록)</div>`}
       </div>
       ${s.discount > 0 ? `<div class="discount-badge"><span class="num">${s.discount}</span><span class="pct">%</span></div>` : ''}
       <div class="info-panel">
