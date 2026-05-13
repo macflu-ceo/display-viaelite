@@ -351,7 +351,7 @@
 
 <script>
 // ===== CONFIG (백엔드 연결 시 수정) =====
-const APPS_SCRIPT_URL = 'YOUR_TABLET_APPS_SCRIPT_URL_HERE';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby35L7HPeBSlUfzF1EVclsM2mfAVZgNy4sg4NRT_MIyWxfV11Ll9CCxlpBo6sJZzV418w/exec';
 const SLIDE_DURATION = 5000; // 5초
 const POLL_INTERVAL = 30000; // 30초마다 슬라이드 동기화
 
@@ -493,19 +493,31 @@ function prevSlide() { if (slides.length) showSlide((currentSlide - 1 + slides.l
 function startAuto() { stopAuto(); if (slides.length > 1) autoTimer = setInterval(nextSlide, SLIDE_DURATION); }
 function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
 
-// Touch swipe
-let touchStartX = 0, touchStartY = 0;
-document.getElementById('display').addEventListener('touchstart', e => {
+// Touch swipe (개선: 임계값 낮추고 시간제한 추가, document 레벨 캡처)
+let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+const SWIPE_THRESHOLD = 30;
+const SWIPE_TIME_LIMIT = 600;
+
+document.addEventListener('touchstart', e => {
+  if (document.getElementById('display').style.display === 'none') return;
+  if (e.target.closest('.modal-bg, .login-overlay, .buy-btn')) return;
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now();
   stopAuto();
 }, { passive: true });
-document.getElementById('display').addEventListener('touchend', e => {
+
+document.addEventListener('touchend', e => {
+  if (document.getElementById('display').style.display === 'none') return;
+  if (e.target.closest('.modal-bg, .login-overlay, .buy-btn')) return;
+  if (!touchStartTime) return;
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
-  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+  const dt = Date.now() - touchStartTime;
+  if (dt < SWIPE_TIME_LIMIT && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > SWIPE_THRESHOLD) {
     if (dx > 0) prevSlide(); else nextSlide();
   }
+  touchStartTime = 0;
   startAuto();
 }, { passive: true });
 
