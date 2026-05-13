@@ -1,6 +1,5 @@
-// VIA ELITE Store Display — Service Worker
-// 오프라인 캐시 + 빠른 재로딩
-const CACHE_NAME = 'viaelite-display-v1';
+// VIA ELITE Display Admin — Service Worker
+const CACHE_NAME = 'viaelite-display-admin-v1';
 const ASSETS = [
   '/',
   '/index.html',
@@ -12,9 +11,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS).catch(() => {}))
-  );
+  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS).catch(() => {})));
   self.skipWaiting();
 });
 
@@ -28,12 +25,10 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Apps Script 호출은 항상 네트워크로
   if (e.request.url.includes('script.google.com')) {
     e.respondWith(fetch(e.request).catch(() => new Response('{"success":false,"message":"offline"}', { headers: { 'Content-Type': 'application/json' } })));
     return;
   }
-  // 나머지는 캐시 우선
   e.respondWith(
     caches.match(e.request).then(cached =>
       cached || fetch(e.request).then(res => {
