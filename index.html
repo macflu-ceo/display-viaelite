@@ -42,7 +42,8 @@
   }
 
   .slide {
-    position: absolute; inset: 0;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
     display: flex;
     opacity: 0; pointer-events: none;
     visibility: hidden;
@@ -260,6 +261,62 @@
   .slide .info-side .buy-btn:hover { box-shadow: 0 22px 50px rgba(28, 56, 41, 0.45); }
   .slide .info-side .buy-btn:active { transform: scale(0.97); }
   .slide .info-side .buy-btn .arrow { font-size: 28px; }
+
+  /* ===== 태블릿 세로 모드 대응 ===== */
+  @media (orientation: portrait) {
+    .slide { flex-direction: column; }
+    .slide .image-side {
+      flex: 0 0 48vh;
+    }
+    .slide .image-side img {
+      max-width: 72%; max-height: 90%;
+    }
+    .slide .info-side {
+      flex: 1;
+      padding: 28px 36px 130px;
+      justify-content: flex-start;
+    }
+    .slide .info-side .top-tag {
+      margin-bottom: 16px; padding: 6px 14px; font-size: 11px;
+    }
+    .slide .info-side .brand-en {
+      font-size: 48px; margin-bottom: 6px;
+    }
+    .slide .info-side .brand-kr {
+      font-size: 14px; margin-bottom: 16px;
+    }
+    .slide .info-side .divider { margin-bottom: 16px; }
+    .slide .info-side .product-name {
+      font-size: 16px; margin-bottom: 16px;
+    }
+    .slide .info-side .divider-sub { margin-bottom: 16px; }
+    .slide .info-side .disc-row {
+      margin-bottom: 6px; margin-right: -6px;
+    }
+    .slide .info-side .discount-tag { padding: 12px 20px; }
+    .slide .info-side .discount-tag .num { font-size: 36px; }
+    .slide .info-side .discount-tag .pct { font-size: 24px; }
+    .slide .info-side .discount-tag .off { font-size: 11px; }
+    .slide .info-side .price-original-label { font-size: 11px; }
+    .slide .info-side .price-original { font-size: 17px; margin-bottom: 14px; }
+    .slide .info-side .price-label { font-size: 11px; margin-bottom: 6px; }
+    .slide .info-side .price-sale { font-size: 44px; }
+    .slide .info-side .price-sale .won { font-size: 20px; }
+    .slide .info-side .buy-btn {
+      right: 32px; bottom: 32px;
+      padding: 20px 44px; font-size: 17px;
+      letter-spacing: 0.2em;
+    }
+    .slide .info-side .buy-btn .arrow { font-size: 20px; }
+  }
+
+  /* 더 좁은 세로 화면 (작은 태블릿) */
+  @media (orientation: portrait) and (max-width: 700px) {
+    .slide .image-side { flex: 0 0 42vh; }
+    .slide .info-side .brand-en { font-size: 40px; }
+    .slide .info-side .price-sale { font-size: 36px; }
+    .slide .info-side .buy-btn { padding: 18px 38px; font-size: 15px; }
+  }
 
   .bottom-indicators {
     position: absolute; bottom: 20px; left: 50%;
