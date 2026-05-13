@@ -69,9 +69,9 @@
   .top-overlay {
     position: absolute; top: 0; left: 0; right: 0;
     height: 76px;
-    padding: 0 40px;
-    display: grid; grid-template-columns: 1fr 1.4fr 1fr; align-items: center;
-    gap: 24px;
+    padding: 0 24px;
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+    gap: 18px;
     z-index: 20;
     background: #fff;
     border-bottom: 1px solid #eae8e0;
@@ -81,9 +81,16 @@
     filter: brightness(0) saturate(100%) invert(15%) sepia(34%) saturate(1264%) hue-rotate(108deg) brightness(95%) contrast(89%);
   }
   .top-overlay .filter-bar {
-    display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
-    pointer-events: auto;
+    display: flex; align-items: center; gap: 8px;
+    overflow-x: auto; overflow-y: hidden;
+    flex-wrap: nowrap; white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    min-width: 0;
+    padding: 4px 0;
   }
+  .top-overlay .filter-bar::-webkit-scrollbar { display: none; }
+  .top-overlay .filter-bar .cat-btn { flex: 0 0 auto; }
   .top-overlay .cat-btn {
     background: rgba(28,56,41,0.06); color: #1c3829;
     border: 1px solid rgba(28,56,41,0.18);
@@ -97,8 +104,10 @@
     background: #1c3829; color: #fff; border-color: #1c3829;
     box-shadow: 0 4px 12px rgba(28,56,41,0.25);
   }
-  .top-overlay .filter-sep {
-    width: 1px; height: 22px; background: rgba(28,56,41,0.2); margin: 0 8px;
+  .top-overlay .gender-group {
+    display: flex; align-items: center; gap: 8px; flex: 0 0 auto;
+    padding-left: 14px;
+    border-left: 1px solid rgba(28,56,41,0.15);
   }
   .top-overlay .gender-btn {
     background: transparent; color: #1c3829;
@@ -107,6 +116,7 @@
     font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700;
     letter-spacing: 0.06em; cursor: pointer;
     transition: all 0.18s;
+    white-space: nowrap;
   }
   .top-overlay .gender-btn.active {
     background: #1c3829; color: #fff;
@@ -367,14 +377,11 @@
       <button class="cat-btn" data-cat="하의">하의</button>
       <button class="cat-btn" data-cat="원피스">원피스</button>
       <button class="cat-btn" data-cat="악세사리">악세사리</button>
-      <span class="filter-sep"></span>
-      <button class="gender-btn" data-gender="여성">여성</button>
-      <button class="gender-btn" data-gender="남성">남성</button>
     </div>
 
-    <div class="right-info">
-      <span><span class="live-dot"></span>LIVE</span>
-      <span id="dateTime"></span>
+    <div class="gender-group" id="genderGroup">
+      <button class="gender-btn" data-gender="여성">여성</button>
+      <button class="gender-btn" data-gender="남성">남성</button>
     </div>
   </div>
 
@@ -632,6 +639,7 @@ document.getElementById('display').addEventListener('click', e => {
 
 // Time
 function updateDateTime() {
+  if (!document.getElementById('dateTime')) return;
   const now = new Date();
   const opts = { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
   document.getElementById('dateTime').textContent = now.toLocaleString('ko-KR', opts);
@@ -641,25 +649,27 @@ setInterval(updateDateTime, 30000);
 
 // ===== FILTER BAR =====
 document.getElementById('filterBar').addEventListener('click', e => {
-  const target = e.target.closest('button');
+  const target = e.target.closest('button.cat-btn');
   if (!target) return;
-  if (target.classList.contains('cat-btn')) {
-    document.querySelectorAll('#filterBar .cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#filterBar .cat-btn').forEach(b => b.classList.remove('active'));
+  target.classList.add('active');
+  activeCategory = target.dataset.cat;
+  applyFilter();
+});
+
+document.getElementById('genderGroup').addEventListener('click', e => {
+  const target = e.target.closest('button.gender-btn');
+  if (!target) return;
+  const g = target.dataset.gender;
+  if (activeGender === g) {
+    activeGender = null;
+    target.classList.remove('active');
+  } else {
+    document.querySelectorAll('#genderGroup .gender-btn').forEach(b => b.classList.remove('active'));
     target.classList.add('active');
-    activeCategory = target.dataset.cat;
-    applyFilter();
-  } else if (target.classList.contains('gender-btn')) {
-    const g = target.dataset.gender;
-    if (activeGender === g) {
-      activeGender = null;
-      target.classList.remove('active');
-    } else {
-      document.querySelectorAll('#filterBar .gender-btn').forEach(b => b.classList.remove('active'));
-      target.classList.add('active');
-      activeGender = g;
-    }
-    applyFilter();
+    activeGender = g;
   }
+  applyFilter();
 });
 
 // ===== Modal =====
