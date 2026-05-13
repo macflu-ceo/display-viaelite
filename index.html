@@ -33,6 +33,10 @@
     width: 100vw; height: 100vh;
     background: #faf9f5;
     position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  #slidesContainer {
+    flex: 1; position: relative; overflow: hidden;
   }
 
   .slide {
@@ -45,38 +49,30 @@
   .slide.active { opacity: 1; pointer-events: auto; visibility: visible; }
 
   .slide .image-side {
-    flex: 1.5;
+    flex: 1.35;
     position: relative;
-    background: linear-gradient(135deg, #f5f4ee 0%, #eae8e0 100%);
+    background: #faf9f5;
     display: flex; align-items: center; justify-content: center;
-    padding: 90px 60px 70px;
     overflow: hidden;
   }
-  .slide .image-side::after {
-    content: '';
-    position: absolute; right: 0; top: 15%; bottom: 15%;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(28,56,41,0.18), transparent);
-  }
   .slide .image-side img {
-    max-width: 100%; max-height: 100%;
+    max-width: 78%; max-height: 84%;
     object-fit: contain;
-    filter: drop-shadow(0 24px 48px rgba(0,0,0,0.14));
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.18));
   }
   .slide .image-side .placeholder {
     color: #c0bdb3; font-size: 16px; letter-spacing: 0.1em; text-align: center;
   }
 
   .top-overlay {
-    position: absolute; top: 0; left: 0; right: 0;
-    padding: 18px 40px;
-    display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+    flex: 0 0 auto;
+    padding: 22px 40px;
+    display: grid; grid-template-columns: 1fr 1.4fr 1fr; align-items: center;
     gap: 24px;
-    z-index: 10;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.96), rgba(255,255,255,0));
-    pointer-events: none;
+    z-index: 20;
+    background: #fff;
+    border-bottom: 1px solid #eae8e0;
   }
-  .top-overlay > * { pointer-events: auto; }
   .top-overlay .logo img {
     height: 28px; display: block;
     filter: brightness(0) saturate(100%) invert(15%) sepia(34%) saturate(1264%) hue-rotate(108deg) brightness(95%) contrast(89%);
@@ -113,9 +109,9 @@
     background: #1c3829; color: #fff;
   }
   .top-overlay .right-info {
-    display: flex; align-items: center; gap: 20px;
+    display: flex; align-items: center; justify-content: flex-end; gap: 20px;
     color: #1c3829; font-size: 11px; letter-spacing: 0.25em;
-    text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 700;
   }
   .top-overlay .live-dot {
     display: inline-block; width: 8px; height: 8px;
@@ -124,92 +120,100 @@
   }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  /* 정보 영역 안의 할인율 강조 */
-  .slide .info-side .discount-tag {
-    display: inline-flex; align-items: baseline; gap: 4px;
-    color: #c0392b; font-family: 'Inter', sans-serif;
-    font-weight: 900; letter-spacing: -0.02em;
-    margin-bottom: 14px;
-  }
-  .slide .info-side .discount-tag .minus { font-size: 30px; line-height: 1; margin-right: 2px; }
-  .slide .info-side .discount-tag .num { font-size: 56px; line-height: 1; }
-  .slide .info-side .discount-tag .pct { font-size: 30px; line-height: 1; margin-left: 2px; }
-  .slide .info-side .discount-tag .label {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.25em;
-    margin-left: 12px; align-self: center;
-    color: #c0392b; text-transform: uppercase;
-  }
-
   .slide .info-side {
     flex: 1;
     background: #faf9f5;
-    padding: 120px 70px 60px;
     display: flex; flex-direction: column;
-    overflow-y: auto;
+    padding: 60px 64px 180px;
+    position: relative;
+    justify-content: center;
   }
-  .slide .info-side .spacer-top { flex: 1; min-height: 20px; }
-  .slide .info-side .spacer-bot { flex: 1; min-height: 40px; }
-  .slide .info-side .title-eyebrow {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
-    color: #c0392b; font-weight: 700; margin-bottom: 28px;
+
+  .slide .info-side .top-tag {
+    display: inline-flex; align-items: center; align-self: flex-start;
+    background: #1c3829; color: #fff;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
+    padding: 8px 18px; border-radius: 999px;
+    margin-bottom: 36px;
+    box-shadow: 0 6px 16px rgba(28,56,41,0.22);
   }
-  .slide .info-side .brand-line { margin-bottom: 8px; }
+  .slide .info-side .top-tag::before {
+    content: '★'; margin-right: 8px; font-size: 11px;
+  }
+
   .slide .info-side .brand-en {
-    display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 64px; font-weight: 500; color: #1c1c1c;
-    letter-spacing: 0.01em; line-height: 1.05;
+    font-size: 68px; font-weight: 600; color: #1c1c1c;
+    letter-spacing: 0.02em; line-height: 1; margin-bottom: 10px;
   }
   .slide .info-side .brand-kr {
-    display: block;
-    font-size: 14px; color: #8a8174; font-weight: 500;
-    letter-spacing: 0.2em; margin-top: 10px; text-transform: uppercase;
+    font-size: 17px; color: #8a8174; font-weight: 500;
+    letter-spacing: 0.18em; margin-bottom: 26px;
   }
   .slide .info-side .divider {
-    width: 56px; height: 1px; background: #1c3829;
-    margin: 32px 0 28px; opacity: 0.35;
+    height: 1px; background: #1c3829; opacity: 0.25; margin-bottom: 28px;
   }
-  .slide .info-side .product-name {
-    font-size: 20px; color: #3a3a3a; font-weight: 400;
-    letter-spacing: 0.02em; margin-bottom: 56px; line-height: 1.5;
+
+  /* 할인 태그 — 빨간 스티커, 우측 정렬 */
+  .slide .info-side .disc-row {
+    display: flex; justify-content: flex-end; margin-bottom: 10px;
+    margin-right: -12px;
+  }
+  .slide .info-side .discount-tag {
+    background: #c0392b; color: #fff;
+    padding: 16px 28px; border-radius: 10px;
+    transform: rotate(-4deg);
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 14px 32px rgba(192,57,43,0.42);
+    display: inline-flex; align-items: baseline; gap: 2px;
+  }
+  .slide .info-side .discount-tag .num { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+  .slide .info-side .discount-tag .pct { font-size: 32px; font-weight: 800; line-height: 1; }
+  .slide .info-side .discount-tag .off { font-size: 14px; font-weight: 800; letter-spacing: 0.2em; margin-left: 6px; line-height: 1; align-self: center; }
+
+  .slide .info-side .price-original-label {
+    font-size: 12px; color: #999; font-weight: 600;
+    letter-spacing: 0.14em; margin-bottom: 4px;
   }
   .slide .info-side .price-original {
-    font-size: 17px; color: #a09c93; text-decoration: line-through;
-    text-decoration-color: rgba(192,57,43,0.55); font-weight: 400;
-    letter-spacing: 0.02em; margin-bottom: 12px;
+    font-size: 22px; color: #888; text-decoration: line-through;
+    text-decoration-color: rgba(192,57,43,0.6);
+    font-weight: 500; margin-bottom: 22px;
   }
   .slide .info-side .price-label {
-    font-size: 11px; color: #1c3829; font-weight: 700;
-    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;
+    font-size: 13px; color: #1c3829; font-weight: 700;
+    letter-spacing: 0.16em; margin-bottom: 8px;
   }
   .slide .info-side .price-sale {
     font-family: 'Inter', sans-serif;
-    font-size: 54px; font-weight: 800;
-    color: #1c1c1c; letter-spacing: -0.025em; line-height: 1;
-    margin-bottom: 44px;
+    font-size: 64px; font-weight: 900;
+    color: #1c1c1c; letter-spacing: -0.03em; line-height: 1;
   }
   .slide .info-side .price-sale .won {
-    font-size: 24px; margin-left: 6px; font-weight: 600;
+    font-size: 28px; margin-left: 6px; font-weight: 700;
   }
 
-  .buy-btn {
+  /* 큰 알약 구매하기 — 우측 하단 고정 */
+  .slide .info-side .buy-btn {
+    position: absolute;
+    right: 56px; bottom: 56px;
     background: #1c3829; color: #fff;
-    border: 0; padding: 22px 48px;
+    border: 0; padding: 30px 72px;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 17px; font-weight: 700;
-    letter-spacing: 0.18em;
+    font-size: 24px; font-weight: 800;
+    letter-spacing: 0.26em;
     border-radius: 999px;
     cursor: pointer;
-    box-shadow: 0 14px 32px rgba(28, 56, 41, 0.32);
+    box-shadow: 0 18px 42px rgba(28, 56, 41, 0.38);
     transition: transform 0.15s, box-shadow 0.15s;
-    display: inline-flex; align-items: center; gap: 12px;
+    display: inline-flex; align-items: center; gap: 18px;
     white-space: nowrap;
-    align-self: flex-start;
+    z-index: 5;
   }
-  .buy-btn:hover { box-shadow: 0 18px 40px rgba(28, 56, 41, 0.4); }
-  .buy-btn:active { transform: scale(0.96); }
-  .buy-btn .arrow { font-size: 22px; }
+  .slide .info-side .buy-btn:hover { box-shadow: 0 22px 50px rgba(28, 56, 41, 0.45); }
+  .slide .info-side .buy-btn:active { transform: scale(0.97); }
+  .slide .info-side .buy-btn .arrow { font-size: 28px; }
 
   .bottom-indicators {
     position: absolute; bottom: 20px; left: 50%;
@@ -543,20 +547,24 @@ function renderSlides() {
         ${s.image ? `<img src="${normalizeImg(s.image)}" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=fallbackImg(this.src);">` : `<div class="placeholder">상품 이미지 (어드민에서 등록)</div>`}
       </div>
       <div class="info-side">
-        <div class="spacer-top"></div>
-        ${s.titleEyebrow ? `<div class="title-eyebrow">${s.titleEyebrow}</div>` : ''}
-        <div class="brand-line">
-          <span class="brand-en">${s.brandEn || ''}</span>
-          ${s.brandKr ? `<span class="brand-kr">${s.brandKr}</span>` : ''}
-        </div>
+        ${s.title ? `<div class="top-tag">${s.title}</div>` : ''}
+        <div class="brand-en">${s.brandEn || ''}</div>
+        ${s.brandKr ? `<div class="brand-kr">${s.brandKr}</div>` : ''}
         <div class="divider"></div>
-        <div class="product-name">${s.productName || ''}</div>
-        ${s.original ? `<div class="price-original">${fmtWon(s.original)}</div>` : ''}
-        ${s.discount > 0 ? `<div class="discount-tag"><span class="minus">−</span><span class="num">${s.discount}</span><span class="pct">%</span><span class="label">SALE</span></div>` : ''}
+        ${s.discount > 0 ? `
+          <div class="disc-row">
+            <div class="discount-tag">
+              <span class="num">${s.discount}</span><span class="pct">%</span><span class="off">OFF</span>
+            </div>
+          </div>
+        ` : ''}
+        ${s.original ? `
+          <div class="price-original-label">백화점가</div>
+          <div class="price-original">${fmtWon(s.original)}</div>
+        ` : ''}
         <div class="price-label">비아엘리떼 컨시어지 가</div>
         <div class="price-sale">${Number(s.sale).toLocaleString('ko-KR')}<span class="won">원</span></div>
         <button class="buy-btn" data-buy-id="${s.id}" type="button">구매하기 <span class="arrow">→</span></button>
-        <div class="spacer-bot"></div>
       </div>
     </div>
   `).join('');
