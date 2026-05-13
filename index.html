@@ -447,14 +447,14 @@ function showLogin() {
   stopAuto();
 }
 
-async function doLogin(id, password) {
+async function doLogin(id, pw) {
   if (isDemoMode) {
     // 데모 모드 — 아무 ID/비번 통과
     return { success: true, id, name: id };
   }
   const res = await fetch(APPS_SCRIPT_URL, {
     method: 'POST',
-    body: JSON.stringify({ action: 'store_login', id, password })
+    body: JSON.stringify({ action: 'store_login', id: id, pw: pw })
   });
   return await res.json();
 }
@@ -468,8 +468,8 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
   try {
     const result = await doLogin(id, pw);
     if (result.success) {
-      currentUser = result;
-      localStorage.setItem('viaelite_tablet_session', JSON.stringify(result));
+      currentUser = { id: id, name: result.store || id, store: result.store || id };
+      localStorage.setItem('viaelite_tablet_session', JSON.stringify(currentUser));
       showDisplay();
       loadSlides();
     } else {
