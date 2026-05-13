@@ -45,11 +45,11 @@
   .slide.active { opacity: 1; pointer-events: auto; visibility: visible; }
 
   .slide .image-side {
-    flex: 1.15;
+    flex: 1.5;
     position: relative;
     background: linear-gradient(135deg, #f5f4ee 0%, #eae8e0 100%);
     display: flex; align-items: center; justify-content: center;
-    padding: 120px 80px 120px;
+    padding: 90px 60px 70px;
     overflow: hidden;
   }
   .slide .image-side::after {
@@ -124,18 +124,21 @@
   }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  .slide .discount-badge {
-    position: absolute; top: 100px; left: 60px;
-    background: #1c3829; color: #fff;
-    padding: 14px 26px;
-    border-radius: 999px;
-    display: flex; align-items: baseline; gap: 4px;
-    font-weight: 800; font-family: 'Inter', sans-serif;
-    box-shadow: 0 10px 28px rgba(28, 56, 41, 0.25);
-    z-index: 5;
+  /* 정보 영역 안의 할인율 강조 */
+  .slide .info-side .discount-tag {
+    display: inline-flex; align-items: baseline; gap: 4px;
+    color: #c0392b; font-family: 'Inter', sans-serif;
+    font-weight: 900; letter-spacing: -0.02em;
+    margin-bottom: 14px;
   }
-  .slide .discount-badge .num { font-size: 28px; line-height: 1; letter-spacing: -0.02em; }
-  .slide .discount-badge .pct { font-size: 16px; line-height: 1; }
+  .slide .info-side .discount-tag .minus { font-size: 30px; line-height: 1; margin-right: 2px; }
+  .slide .info-side .discount-tag .num { font-size: 56px; line-height: 1; }
+  .slide .info-side .discount-tag .pct { font-size: 30px; line-height: 1; margin-left: 2px; }
+  .slide .info-side .discount-tag .label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.25em;
+    margin-left: 12px; align-self: center;
+    color: #c0392b; text-transform: uppercase;
+  }
 
   .slide .info-side {
     flex: 1;
@@ -538,7 +541,6 @@ function renderSlides() {
     <div class="slide ${i === 0 ? 'active' : ''}" data-idx="${i}">
       <div class="image-side">
         ${s.image ? `<img src="${normalizeImg(s.image)}" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=fallbackImg(this.src);">` : `<div class="placeholder">상품 이미지 (어드민에서 등록)</div>`}
-        ${s.discount > 0 ? `<div class="discount-badge"><span class="num">${s.discount}</span><span class="pct">%</span></div>` : ''}
       </div>
       <div class="info-side">
         <div class="spacer-top"></div>
@@ -550,6 +552,7 @@ function renderSlides() {
         <div class="divider"></div>
         <div class="product-name">${s.productName || ''}</div>
         ${s.original ? `<div class="price-original">${fmtWon(s.original)}</div>` : ''}
+        ${s.discount > 0 ? `<div class="discount-tag"><span class="minus">−</span><span class="num">${s.discount}</span><span class="pct">%</span><span class="label">SALE</span></div>` : ''}
         <div class="price-label">비아엘리떼 컨시어지 가</div>
         <div class="price-sale">${Number(s.sale).toLocaleString('ko-KR')}<span class="won">원</span></div>
         <button class="buy-btn" data-buy-id="${s.id}" type="button">구매하기 <span class="arrow">→</span></button>
