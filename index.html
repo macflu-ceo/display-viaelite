@@ -189,7 +189,11 @@
     letter-spacing: 0.18em; margin-bottom: 26px;
   }
   .slide .info-side .divider {
-    height: 1px; background: #1c3829; opacity: 0.25; margin-bottom: 28px;
+    height: 1px; background: #1c3829; opacity: 0.25; margin-bottom: 22px;
+  }
+  .slide .info-side .product-name {
+    font-size: 20px; color: #3a3a3a; font-weight: 400;
+    letter-spacing: 0.02em; margin-bottom: 26px; line-height: 1.5;
   }
 
   /* 할인 태그 — 빨간 스티커, 우측 정렬 */
@@ -624,6 +628,7 @@ function renderSlides() {
         <div class="brand-en">${s.brandEn || ''}</div>
         ${s.brandKr ? `<div class="brand-kr">${s.brandKr}</div>` : ''}
         <div class="divider"></div>
+        ${s.productName ? `<div class="product-name">${s.productName}</div>` : ''}
         ${s.discount > 0 ? `
           <div class="disc-row">
             <div class="discount-tag">
