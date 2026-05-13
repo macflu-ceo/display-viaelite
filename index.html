@@ -33,10 +33,12 @@
     width: 100vw; height: 100vh;
     background: #faf9f5;
     position: relative; overflow: hidden;
-    display: flex; flex-direction: column;
   }
   #slidesContainer {
-    flex: 1; position: relative; overflow: hidden;
+    position: absolute;
+    top: 76px;
+    left: 0; right: 0; bottom: 0;
+    overflow: hidden;
   }
 
   .slide {
@@ -65,8 +67,9 @@
   }
 
   .top-overlay {
-    flex: 0 0 auto;
-    padding: 22px 40px;
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 76px;
+    padding: 0 40px;
     display: grid; grid-template-columns: 1fr 1.4fr 1fr; align-items: center;
     gap: 24px;
     z-index: 20;
