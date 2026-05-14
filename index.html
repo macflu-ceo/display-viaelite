@@ -193,7 +193,7 @@
     letter-spacing: 0.18em; margin-bottom: 3cqi;
   }
   .slide .info-side .divider {
-    height: 1px; background: #1c3829; opacity: 0.45;
+    height: 2px; background: #1c3829; opacity: 0.55;
     margin: 0 0 2.6cqi;
   }
   .slide .info-side .product-name {
@@ -204,7 +204,7 @@
     overflow: hidden;
   }
   .slide .info-side .divider-sub {
-    height: 1px; background: #1c3829; opacity: 0.18;
+    height: 1px; background: #1c3829; opacity: 0.35;
     margin: 0 0 2.6cqi;
   }
 
@@ -680,8 +680,10 @@ function renderSlides() {
         <div class="brand-en">${s.brandEn || ''}</div>
         ${s.brandKr ? `<div class="brand-kr">${s.brandKr}</div>` : ''}
         <div class="divider"></div>
-        ${s.productName ? `<div class="product-name">${s.productName}</div>` : ''}
-        <div class="divider-sub"></div>
+        ${s.productName ? `
+          <div class="product-name">${s.productName}</div>
+          <div class="divider-sub"></div>
+        ` : ''}
         ${s.discount > 0 ? `
           <div class="disc-row">
             <div class="discount-tag">

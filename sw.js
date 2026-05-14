@@ -1,6 +1,6 @@
 // VIA ELITE Store Display — Service Worker
 // HTML/JS는 네트워크 우선, 아이콘만 캐시 우선
-const CACHE_NAME = 'viaelite-display-v18';
+const CACHE_NAME = 'viaelite-display-v19';
 const ASSETS = [
   '/manifest.json',
   '/icons/icon-192.png',
