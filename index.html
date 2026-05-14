@@ -162,160 +162,150 @@
     flex: 1;
     background: #faf9f5;
     display: flex; flex-direction: column;
-    padding: 44px 64px 180px;
+    padding: 4% 5%;
     position: relative;
-    justify-content: flex-start;
+    min-width: 0;
+    container-type: inline-size;
   }
 
   .slide .info-side .top-tag {
     display: inline-flex; align-items: center; align-self: flex-start;
     background: #1c3829; color: #fff;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
-    padding: 8px 18px; border-radius: 999px;
-    margin-bottom: 22px;
+    font-size: 2.4cqi; font-weight: 700; letter-spacing: 0.16em;
+    padding: 1.4cqi 3.2cqi; border-radius: 999px;
+    margin-bottom: 3cqi;
     box-shadow: 0 6px 16px rgba(28,56,41,0.22);
   }
   .slide .info-side .top-tag::before {
-    content: '★'; margin-right: 8px; font-size: 11px;
+    content: '★'; margin-right: 1.2cqi; font-size: 2.2cqi;
   }
 
   .slide .info-side .brand-en {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 68px; font-weight: 600; color: #1c1c1c;
-    letter-spacing: 0.02em; line-height: 1; margin-bottom: 10px;
+    font-size: 10cqi; font-weight: 600; color: #1c1c1c;
+    letter-spacing: 0.01em; line-height: 1.05;
+    word-break: break-word; overflow-wrap: anywhere;
+    margin-bottom: 1.5cqi;
   }
   .slide .info-side .brand-kr {
-    font-size: 17px; color: #8a8174; font-weight: 500;
-    letter-spacing: 0.18em; margin-bottom: 22px;
+    font-size: 2.8cqi; color: #8a8174; font-weight: 500;
+    letter-spacing: 0.18em; margin-bottom: 3cqi;
   }
   .slide .info-side .divider {
     height: 1px; background: #1c3829; opacity: 0.45;
-    margin: 0 0 22px;
+    margin: 0 0 2.6cqi;
   }
   .slide .info-side .product-name {
-    font-size: 19px; color: #3a3a3a; font-weight: 400;
-    letter-spacing: 0.02em; margin-bottom: 22px; line-height: 1.5;
+    font-size: 3cqi; color: #3a3a3a; font-weight: 400;
+    letter-spacing: 0.02em; line-height: 1.45;
+    margin-bottom: 2.6cqi;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .slide .info-side .divider-sub {
     height: 1px; background: #1c3829; opacity: 0.18;
-    margin: 0 0 22px;
+    margin: 0 0 2.6cqi;
   }
 
   /* 할인 태그 — 빨간 스티커, 우측 정렬 */
   .slide .info-side .disc-row {
-    display: flex; justify-content: flex-end; margin-bottom: 10px;
-    margin-right: -12px;
+    display: flex; justify-content: flex-end; margin-bottom: 1.8cqi;
+    margin-right: -1.5cqi;
   }
   .slide .info-side .discount-tag {
     background: #c0392b; color: #fff;
-    padding: 16px 28px; border-radius: 10px;
+    padding: 2.2cqi 4cqi; border-radius: 1.5cqi;
     transform: rotate(-4deg);
     font-family: 'Inter', sans-serif;
     box-shadow: 0 14px 32px rgba(192,57,43,0.42);
-    display: inline-flex; align-items: baseline; gap: 2px;
+    display: inline-flex; align-items: baseline; gap: 0.4cqi;
   }
-  .slide .info-side .discount-tag .num { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
-  .slide .info-side .discount-tag .pct { font-size: 32px; font-weight: 800; line-height: 1; }
-  .slide .info-side .discount-tag .off { font-size: 14px; font-weight: 800; letter-spacing: 0.2em; margin-left: 6px; line-height: 1; align-self: center; }
+  .slide .info-side .discount-tag .num { font-size: 6.4cqi; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+  .slide .info-side .discount-tag .pct { font-size: 4.4cqi; font-weight: 800; line-height: 1; }
+  .slide .info-side .discount-tag .off { font-size: 2.2cqi; font-weight: 800; letter-spacing: 0.2em; margin-left: 0.8cqi; align-self: center; }
 
+  /* 가격 비교 — 백화점가 vs 컨시어지가 */
+  .slide .info-side .price-compare {
+    display: flex; align-items: baseline; gap: 2.4cqi;
+    margin-bottom: 1.8cqi;
+  }
   .slide .info-side .price-original-label {
-    font-size: 12px; color: #999; font-weight: 600;
-    letter-spacing: 0.14em; margin-bottom: 4px;
+    font-size: 2.8cqi; color: #999; font-weight: 600; letter-spacing: 0.1em;
   }
   .slide .info-side .price-original {
-    font-size: 22px; color: #888; text-decoration: line-through;
-    text-decoration-color: rgba(192,57,43,0.6);
-    font-weight: 500; margin-bottom: 22px;
+    font-size: 4cqi; color: #888; text-decoration: line-through;
+    text-decoration-color: #c0392b;
+    text-decoration-thickness: 2.5px;
+    font-weight: 600;
   }
   .slide .info-side .price-label {
-    font-size: 13px; color: #1c3829; font-weight: 700;
-    letter-spacing: 0.16em; margin-bottom: 8px;
+    font-size: 3cqi; color: #1c3829; font-weight: 700;
+    letter-spacing: 0.16em; margin-bottom: 1.6cqi;
   }
   .slide .info-side .price-sale {
     font-family: 'Inter', sans-serif;
-    font-size: 64px; font-weight: 900;
+    font-size: 13.5cqi; font-weight: 900;
     color: #1c1c1c; letter-spacing: -0.03em; line-height: 1;
+    margin-bottom: 2.4cqi;
   }
-  .slide .info-side .price-sale .won {
-    font-size: 28px; margin-left: 6px; font-weight: 700;
+  .slide .info-side .price-sale .won { font-size: 0.4em; margin-left: 1cqi; font-weight: 700; }
+
+  /* 할인 금액 강조 배지 */
+  .slide .info-side .save-badge {
+    display: inline-flex; align-items: center; gap: 2cqi;
+    background: linear-gradient(135deg, #c0392b 0%, #962d22 100%);
+    color: #fff;
+    padding: 2.4cqi 4.5cqi;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    align-self: flex-start;
+    box-shadow: 0 10px 24px rgba(192,57,43,0.4);
+  }
+  .slide .info-side .save-badge .icon { font-size: 4cqi; line-height: 1; }
+  .slide .info-side .save-badge .save-label {
+    font-size: 2.6cqi; font-weight: 800; letter-spacing: 0.18em;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .slide .info-side .save-badge .save-amount {
+    font-size: 4.2cqi; font-weight: 900; letter-spacing: -0.02em;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .slide .info-side .save-badge .save-suffix {
+    font-size: 2.8cqi; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
-  /* 큰 알약 구매하기 — 우측 하단 고정 */
+  /* 구매하기 버튼 — flex 흐름 안에서 우측 하단 고정 */
+  .slide .info-side .buy-btn-wrap {
+    margin-top: auto;
+    display: flex; justify-content: flex-end;
+    padding-top: 3cqi;
+    flex-shrink: 0;
+  }
   .slide .info-side .buy-btn {
-    position: absolute;
-    right: 56px; bottom: 56px;
     background: #1c3829; color: #fff;
-    border: 0; padding: 30px 72px;
+    border: 0; padding: 4.5cqi 9cqi;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 24px; font-weight: 800;
-    letter-spacing: 0.26em;
+    font-size: 4cqi; font-weight: 800;
+    letter-spacing: 0.24em;
     border-radius: 999px;
     cursor: pointer;
-    box-shadow: 0 18px 42px rgba(28, 56, 41, 0.38);
+    box-shadow: 0 16px 36px rgba(28, 56, 41, 0.38);
     transition: transform 0.15s, box-shadow 0.15s;
-    display: inline-flex; align-items: center; gap: 18px;
+    display: inline-flex; align-items: center; gap: 2.6cqi;
     white-space: nowrap;
-    z-index: 5;
   }
-  .slide .info-side .buy-btn:hover { box-shadow: 0 22px 50px rgba(28, 56, 41, 0.45); }
+  .slide .info-side .buy-btn:hover { box-shadow: 0 20px 44px rgba(28, 56, 41, 0.45); }
   .slide .info-side .buy-btn:active { transform: scale(0.97); }
-  .slide .info-side .buy-btn .arrow { font-size: 28px; }
+  .slide .info-side .buy-btn .arrow { font-size: 4.6cqi; }
 
-  /* ===== 태블릿 세로 모드 대응 ===== */
+  /* ===== 태블릿 세로 모드 — 위·아래 분할 ===== */
   @media (orientation: portrait) {
     .slide { flex-direction: column; }
-    .slide .image-side {
-      flex: 0 0 48vh;
-    }
-    .slide .image-side img {
-      max-width: 72%; max-height: 90%;
-    }
-    .slide .info-side {
-      flex: 1;
-      padding: 28px 36px 130px;
-      justify-content: flex-start;
-    }
-    .slide .info-side .top-tag {
-      margin-bottom: 16px; padding: 6px 14px; font-size: 11px;
-    }
-    .slide .info-side .brand-en {
-      font-size: 48px; margin-bottom: 6px;
-    }
-    .slide .info-side .brand-kr {
-      font-size: 14px; margin-bottom: 16px;
-    }
-    .slide .info-side .divider { margin-bottom: 16px; }
-    .slide .info-side .product-name {
-      font-size: 16px; margin-bottom: 16px;
-    }
-    .slide .info-side .divider-sub { margin-bottom: 16px; }
-    .slide .info-side .disc-row {
-      margin-bottom: 6px; margin-right: -6px;
-    }
-    .slide .info-side .discount-tag { padding: 12px 20px; }
-    .slide .info-side .discount-tag .num { font-size: 36px; }
-    .slide .info-side .discount-tag .pct { font-size: 24px; }
-    .slide .info-side .discount-tag .off { font-size: 11px; }
-    .slide .info-side .price-original-label { font-size: 11px; }
-    .slide .info-side .price-original { font-size: 17px; margin-bottom: 14px; }
-    .slide .info-side .price-label { font-size: 11px; margin-bottom: 6px; }
-    .slide .info-side .price-sale { font-size: 44px; }
-    .slide .info-side .price-sale .won { font-size: 20px; }
-    .slide .info-side .buy-btn {
-      right: 32px; bottom: 32px;
-      padding: 20px 44px; font-size: 17px;
-      letter-spacing: 0.2em;
-    }
-    .slide .info-side .buy-btn .arrow { font-size: 20px; }
-  }
-
-  /* 더 좁은 세로 화면 (작은 태블릿) */
-  @media (orientation: portrait) and (max-width: 700px) {
-    .slide .image-side { flex: 0 0 42vh; }
-    .slide .info-side .brand-en { font-size: 40px; }
-    .slide .info-side .price-sale { font-size: 36px; }
-    .slide .info-side .buy-btn { padding: 18px 38px; font-size: 15px; }
+    .slide .image-side { flex: 0 0 48vh; }
+    .slide .image-side img { max-width: 72%; max-height: 90%; }
+    .slide .info-side { flex: 1; padding: 4% 5%; }
   }
 
   .bottom-indicators {
@@ -700,12 +690,24 @@ function renderSlides() {
           </div>
         ` : ''}
         ${s.original ? `
-          <div class="price-original-label">백화점가</div>
-          <div class="price-original">${fmtWon(s.original)}</div>
+          <div class="price-compare">
+            <span class="price-original-label">백화점가</span>
+            <span class="price-original">${fmtWon(s.original)}</span>
+          </div>
         ` : ''}
         <div class="price-label">비아엘리떼 컨시어지 가</div>
         <div class="price-sale">${Number(s.sale).toLocaleString('ko-KR')}<span class="won">원</span></div>
-        <button class="buy-btn" data-buy-id="${s.id}" type="button">구매하기 <span class="arrow">→</span></button>
+        ${s.original && s.sale && s.original > s.sale ? `
+          <div class="save-badge">
+            <span class="icon">↓</span>
+            <span class="save-label">단독 할인</span>
+            <span class="save-amount">${(s.original - s.sale).toLocaleString('ko-KR')}</span>
+            <span class="save-suffix">원 절약</span>
+          </div>
+        ` : ''}
+        <div class="buy-btn-wrap">
+          <button class="buy-btn" data-buy-id="${s.id}" type="button">구매하기 <span class="arrow">→</span></button>
+        </div>
       </div>
     </div>
   `).join('');
